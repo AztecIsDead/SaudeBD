@@ -1,0 +1,59 @@
+1-O App serve para que?
+R- 1: Para marcar consultas com um sistema de Senhas por pessoa caso a pessoa tenha um registro válido no sistema de saúde (Quando alguem marca consulta essa pessoa recebe uma senha com base no o quão urgente é sua situação)
+   2: Médico recebe consultas com base em especialidade e pode terminar consultas, passando para a proxima após envio do Exame.
+   3: Paciente pode pegar senha para consulta (resulta em marcar uma consulta) e receber detalhes do Exame.
+   4: No fim da consulta: registrar dados do Exame.
+Dispositivo: Celular
+Pagamento: Nenhum (Seguro de saúde do hospital[Limita o app a pessoas com o seguro])
+
+2-Ideia geral: um sistema de fila para quem ainda vai chegar no hospital (preparar o hospital para receber pessoas em casos urgentes e diminuir o tempo de espera para pessoas que moram longe, além de servir para registrar exames feitos pela pessoa e extras como receitas e atestados.)
+
+a) Quem usa o sistema: Qualquer um que precise de uma consulta e tenha registro no hospital;
+b) O que cada usuário faz: 
+Paciente{ Marca e cancela consultas e vê histórico de consultas de si mesmo, junto com receitas e atestados}
+Médico{Recebe consultas e envia resultados do exame tanto para o paciente quanto para o banco de dados geral do hospital}
+Funcionarios do Hospital{Podem organizar os exames pelo banco de dados para casos futuros}
+
+3-Regras: Um paciente pode realizar várias consultas, porém somente uma consulta poderá estar ativa por vez.
+          Uma consulta pertence a apenas um paciente.
+          Um médico pode atender várias consultas.
+          Cada consulta deve ser atendida por apenas um médico.
+          Uma consulta pode solicitar um ou mais exames.
+          Cada exame pertence a apenas uma consulta.
+          Uma consulta pode gerar uma receita médica.
+          Cada médico possui apenas uma especialidade(Opcional).
+          Um paciente pode possuir vários registros em seu histórico médico.
+          Um paciente pode utilizar um ou mais dispositivos para acessar o sistema.
+
+4-Entidades: Paciente - Dados do paciente (Consultas, Exames)
+              Médico - Dados do médico (Especialidade, Exames, Horários disponíveis)
+              Consultas - Consultas por Paciente, Exame(Por consulta)
+              Exame - Exame(Por consulta, por Paciente e por Médico)
+              Receita - Receita(Por Consulta, por Paciente e por Médico)
+              Especialidade - Por Médico
+              Dispositivos - Celulares
+              Histórico - Generaliza todas as Consultas por Data
+              
+5- Atributos: 
+Paciente: id_paciente, nome, cpf, data_nascimento, telefone, email, numero_seguro;
+Médico: id_medico, nome, crm, id_especialidade, telefone, email;
+Consulta: id_consulta, data_consulta, horário, status, nivel_urgencia, id_paciente, id_medico;
+Exame: id_exame, tipo_exame, resultado, data_exame, id_consulta;
+Receita: id_receita, descricao, data_receita, id_consulta;
+Especialidade:  id_especialidade, nome_especialidade;
+Dispositivo: id_dispositivo, tipo_dispositivo, id_paciente;
+Historico: id_historico, desc_historico, data_registro, id_paciente;
+
+7- Relacionamento entre entradas: 
+Paciente realiza Consulta 1:N
+Médico atende Consulta 1:N
+Consulta solicita Exame 1:N
+Consulta gera Receita 1:1
+Médico possui Especialidade N:1
+Paciente possui Histórico 1:N
+Paciente utiliza Dispositivo 1:N
+
+
+              
+
+              
